@@ -210,3 +210,5 @@ __marimo__/
 # Миграции Django (создаются автоматически в контейнере)
 **/migrations/*.py
 !**/migrations/__init__.py
+
+**/logs/*.py
