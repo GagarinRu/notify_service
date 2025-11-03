@@ -196,7 +196,7 @@ poetry shell
 
 ### Создание миграций
 
-``bash
+```bash
 python manage.py makemigrations
 ```
 
@@ -206,6 +206,6 @@ python manage.py makemigrations
 python manage.py runserver
 ```
 
-### 👥 Авторы
+### 👥 Автор
 
 - Евгений Кудряшов - [GitHub](https://github.com/GagarinRu/)

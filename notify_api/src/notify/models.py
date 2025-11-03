@@ -17,6 +17,7 @@ class Notification(models.Model):
         choices=StatusChoices.choices,
         default=StatusChoices.PENDING,
         verbose_name="Статус",
+        help_text="Статус отправки",
     )
     delay = models.IntegerField(
         choices=DelayChoices.choices,

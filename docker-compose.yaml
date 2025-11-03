@@ -171,24 +171,27 @@ services:
       - notify_service.monitoring_network
 
   notify_nginx:
-    profiles: [ "first","app" ]
-    image: nginx:alpine
-    container_name: notify_service.nginx
-    hostname: notify_service.nginx
-    restart: unless-stopped
-    expose:
-      - "80"
-    ports:
-      - "${NGINX_PORT}:80"
-    depends_on:
-      notify_app:
-        condition: service_healthy
-    volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./nginx/configs:/etc/nginx/conf.d:ro
-      - notify_service_static_data:/app/static:ro
-    networks:
-      - notify_service.app_network
+      profiles: [ "first","app" ]
+      image: nginx:alpine
+      container_name: notify_service.nginx
+      hostname: notify_service.nginx
+      restart: unless-stopped
+      build:
+        context: .
+        dockerfile: ./docker/nginx/Dockerfile
+      expose:
+        - "80"
+      ports:
+        - "${NGINX_PORT}:80"
+      depends_on:
+        notify_app:
+          condition: service_healthy
+      env_file:
+      - .env
+      volumes:
+        - notify_service_static_data:/app/static
+      networks:
+        - notify_service.app_network
 
 networks:
   notify_service.db_network:
