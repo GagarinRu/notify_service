@@ -1,0 +1,113 @@
+[tool.poetry]
+name = "notify-service"
+version = "0.1.0"
+description = "Микросервис для отправки уведомлений по email и Telegram"
+authors = ["Евгений Кудряшов <gagarinru84@yandex.ru>"]
+packages = [{include = "notify", from = "src"}, {include = "config", from = "src"}]
+
+[tool.poetry.dependencies]
+asyncpg = "^0.30.0"
+celery = "^5.5.3"
+django = "^5.2.5"
+django-celery-beat = "^2.8.1"
+django-celery-email = "^3.0.0"
+django-filter = "^25.1"
+djangorestframework = "^3.16.0"
+drf-spectacular = "^0.28.0"
+flower = "^2.0.0"
+gunicorn = "^23.0.0"
+python = "^3.12"
+psycopg2-binary = "^2.9.10"
+python-dotenv = "^1.1.1"
+redis = "^6.2.0"
+requests = "^2.32.3"
+pytelegrambotapi = "^4.16.1"
+
+[tool.poetry.group.dev.dependencies]
+pre-commit = "^4.2.0"
+black = "^25.1.0"
+ruff = "^0.12.11"
+ipython = "^8.30.0"
+django-debug-toolbar = "^4.0.0"
+mypy = "^1.15.0"
+types-requests = "^2.32.0"
+types-redis = "^4.6.0"
+types-PyYAML = "^6.0.12"
+django-stubs = "^4.2.5"
+celery-types = "^0.21.0"
+
+[tool.poetry.group.test.dependencies]
+factory-boy = "^3.3.3"
+pytest-django = "^4.11.1"
+pytest = "^8.4.1"
+
+[tool.ruff]
+line-length = 119
+exclude = [
+    ".git",
+    ".gitignore",
+    "__pycache__",
+    "__init__.py",
+    "manage.py",
+    "poetry.lock",
+    "pyproject.toml",
+    "migrations",
+    "tests.py",
+]
+target-version = "py312"
+fix = true
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "lf"
+
+[tool.ruff.lint]
+ignore = ["E501", "W293"]
+select = ["E", "F", "I", "B", "C", "A", "N", "UP"]
+mccabe.max-complexity = 12
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.mypy]
+python_version = "3.12"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+warn_unreachable = true
+strict_equality = true
+follow_imports = "skip"
+disable_error_code = [
+    "var-annotated",
+    "misc",
+    "attr-defined",
+    "name-defined",
+    "call-overload",
+    "import-untyped"
+]
+
+[[tool.mypy.overrides]]
+module = [
+    "django.*",
+    "celery.*", 
+    "gunicorn.*",
+    "flower.*",
+    "rest_framework.*",
+    "drf_spectacular.*",
+    "notify.*",
+    "config.*"
+]
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "manage"
+ignore_errors = true
