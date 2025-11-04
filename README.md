@@ -34,6 +34,7 @@
 - **Nginx** - reverse proxy и статические файлы
 - **Gunicorn** - WSGI сервер
 - **Telegram Bot API** - отправка сообщений в Telegram
+- **Swagger** - Документация
 
 ## 🏗 Архитектура
 
@@ -53,6 +54,11 @@
 - `send_telegram_task` - задача отправки Telegram
 
 ## 📋 API Endpoints
+
+### Документация
+```http
+http://localhost/docs/
+```
 
 ### Создание уведомления
 ```http
@@ -135,13 +141,13 @@ TELEGRAM_BOT_TOKEN=your-telegram-bot-token
 
 ```bash
 # Запуск всех сервисов
-docker-compose --profile app --profile first up --build
+docker compose --profile app --profile first up --build
 
 # Или выборочный запуск
-docker-compose --profile app up --build      # Django + Nginx
-docker-compose --profile worker up --build   # Celery worker + beat
-docker-compose --profile migration up --build # Миграции БД
-docker-compose --profile monitoring up # Flower
+docker compose --profile app up --build      # Django + Nginx
+docker compose --profile worker up --build   # Celery worker + beat
+docker compose --profile migration up --build # Миграции БД
+docker compose --profile monitoring up # Flower
 ```
 
 ## 🚀 Использование
@@ -149,7 +155,7 @@ docker-compose --profile monitoring up # Flower
 ### Пример создания уведомления
 
 ```bash
-curl -X POST http://localhost:8000/api/notify/ \
+curl -X POST http://localhost/api/notify/ \
   -H "Content-Type: application/json" \
   -d '{
     "message": "Ваше бронирование подтверждено",
@@ -191,6 +197,7 @@ curl http://localhost:8000/health/
 ```bash
 cd notify_api
 poetry install
+poetry self add poetry-plugin-shell
 poetry shell
 ```
 
